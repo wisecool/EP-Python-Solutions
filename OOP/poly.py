@@ -62,10 +62,34 @@ class Polynome :
             return L[0]
         p=Polynome(L[1:])
         return L[0] + x * p.Horner(x)
-
-   
-p=Polynome([4,5,3,0,1])
-print(Polynome([4,5,3,0,1]))
-print(p.Horner(2))
-print(p.eval(2))
     
+    import numpy as np
+    import matplotlib.pyplot as plt
+    def trace(self,xmin,xmax):
+        x=np.linspace(xmin,xmax,1000)
+        y=[]
+        for i in range(1000):
+            y+=[self.eval(x[i])]
+        plt.plot(x,y)
+        plt.show()
+        plt.close()
+   
+class Monome(Polynome) :
+    def __init__(self,c,deg):
+        L=[0 for i in range(deg) ] + [c]
+        Polynome.__init__(self,L)
+        self.coef=c
+    
+    def __str__(self):
+        if self.coef !=1 :
+            return str(self.coef) + 'X^' + str(self.degre)
+        return 'X^' + str(self.degre)
+    
+    def eval(self,x):
+        return self.coef * x **self.degre
+    
+    def __mul__(self,m2):
+        c = self.coef * m2.coef
+        d= self.degre + m2.degre
+
+        return Monome(c,d)
